@@ -1,0 +1,2332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reindustrialize Companies Report</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Roboto', sans-serif;
+      color: #2d2d2d;
+      line-height: 1.8;
+      background-color: #f9fafb;
+    }
+
+    .page-break {
+      page-break-before: always;
+      page-break-after: always;
+    }
+
+    .page {
+      min-height: 100vh;
+      padding-bottom: 40px;
+      position: relative;
+    }
+
+    .page-watermark {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      opacity: 0.1;
+      z-index: 0;
+    }
+
+    .page-watermark img {
+      height: 60px;
+      width: auto;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .cover-page {
+      height: 100vh;
+      background: linear-gradient(135deg, #1a3c6e 0%, #2a528a 100%);
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cover-page::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://images.unsplash.com/photo-1720036236694-d0a231c52563?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center/cover;
+      opacity: 0.15;
+      z-index: 0;
+    }
+
+    .cover-logo {
+      max-width: 250px;
+      margin-bottom: 30px;
+      z-index: 1;
+      border-radius: 50%;
+    }
+
+    .cover-page h1 {
+      font-size: 72px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      z-index: 1;
+    }
+
+    .cover-page .tagline {
+      font-size: 28px;
+      font-weight: 300;
+      max-width: 800px;
+      margin-bottom: 20px;
+      z-index: 1;
+    }
+
+    .cover-page .details {
+      font-size: 24px;
+      font-weight: 400;
+      z-index: 1;
+    }
+
+    .cover-dalus-attribution {
+      position: absolute;
+      bottom: 30px;
+      right: 30px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      z-index: 2;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 15px 20px;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .cover-dalus-attribution:hover {
+      background: rgba(255, 255, 255, 1);
+      transform: translateY(-2px);
+    }
+
+    .cover-dalus-attribution a {
+      transition: all 0.3s ease;
+    }
+
+    .cover-dalus-attribution:hover a {
+      color: #0066cc !important;
+    }
+
+    .cover-dalus-attribution img {
+      height: 35px;
+      width: auto;
+      transition: transform 0.3s ease;
+    }
+
+    .cover-dalus-attribution:hover img {
+      transform: scale(1.05);
+    }
+
+    .cover-dalus-attribution span {
+      font-size: 16px;
+      font-weight: 500;
+      color: #1a3c6e;
+      transition: color 0.3s ease;
+    }
+
+    .cover-dalus-attribution:hover span {
+      color: #0066cc;
+    }
+
+    .content {
+      margin: 40px 0;
+      padding: 0 30px;
+    }
+
+    .content h1 {
+      font-size: 32px;
+      color: #1a3c6e;
+      text-align: center;
+      margin-bottom: 30px;
+      border-bottom: 2px solid #1a3c6e;
+      padding-bottom: 10px;
+    }
+
+    .category {
+      margin-bottom: 80px;
+      padding: 40px 0;
+      border-bottom: 3px solid #e5e7eb;
+      position: relative;
+      page-break-inside: avoid;
+    }
+
+    .category:last-child {
+      border-bottom: none;
+    }
+
+    .category.new-page {
+      page-break-before: always;
+    }
+
+    .page-break-after {
+      page-break-after: always;
+    }
+
+    .category::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #1a3c6e 0%, #2a528a 50%, #1a3c6e 100%);
+      border-radius: 2px;
+    }
+
+    .category h2 {
+      font-size: 36px;
+      color: #1a3c6e;
+      margin-bottom: 30px;
+      padding: 20px 0 15px 0;
+      border-bottom: 2px solid #1a3c6e;
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+      margin: 0 -20px 30px -20px;
+      padding-left: 20px;
+      border-radius: 8px 8px 0 0;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Full-page category dividers */
+    .category-divider {
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #1a3c6e 0%, #2a528a 100%);
+      color: white;
+      text-align: center;
+      padding: 40px;
+      page-break-after: always;
+      position: relative;
+      overflow: hidden;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    .category-divider::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
+      background-size: 50px 50px;
+      transform: rotate(30deg);
+      z-index: 1;
+    }
+
+    .category-divider-content {
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+    }
+
+    .category-divider h2 {
+      font-size: 64px;
+      font-weight: 700;
+      margin-bottom: 30px;
+      border: none;
+      background: none;
+      padding: 0;
+      color: white;
+    }
+
+    .category-divider p {
+      font-size: 24px;
+      font-weight: 300;
+      line-height: 1.6;
+      opacity: 0.9;
+      margin-bottom: 40px;
+    }
+
+    .category-divider .company-count {
+      font-size: 48px;
+      font-weight: 700;
+      opacity: 0.8;
+      margin-top: 40px;
+    }
+
+    .companies-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 25px;
+      align-items: start;
+    }
+
+    .company {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 25px;
+      transition: transform 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      min-height: 400px;
+    }
+
+    .company:hover {
+      transform: translateY(-5px);
+    }
+
+    .company h3 {
+      font-size: 26px;
+      color: #1a3c6e;
+      margin-bottom: 15px;
+      font-weight: 700;
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+    }
+
+    .company img {
+      max-width: 120px;
+      height: 80px;
+      object-fit: contain;
+      margin-bottom: 15px;
+      border-radius: 8px;
+    }
+
+    .company p {
+      margin: 8px 0;
+      font-size: 15px;
+      flex-grow: 1;
+    }
+
+    .company a {
+      color: #0066cc;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .company a:hover {
+      text-decoration: underline;
+      color: #003d99;
+    }
+
+    .news {
+      font-style: italic;
+      color: #4b5563;
+      background-color: #f1f5f9;
+      padding: 10px;
+      border-radius: 6px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 60px 30px;
+      background: linear-gradient(135deg, #1a3c6e 0%, #2a528a 100%);
+      color: white;
+      margin-top: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    footer::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 30px 30px;
+      transform: rotate(30deg);
+      z-index: 1;
+    }
+
+    footer > * {
+      position: relative;
+      z-index: 2;
+    }
+
+    footer p {
+      font-size: 18px;
+      margin: 10px 0;
+      max-width: 600px;
+    }
+
+    footer a {
+      color: #a3bff4;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+      color: white;
+    }
+
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin: 30px 0;
+      padding: 20px 30px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      backdrop-filter: blur(10px);
+    }
+
+    .footer-logo img {
+      height: 50px;
+      width: auto;
+    }
+
+    .footer-logo span {
+      font-size: 20px;
+      font-weight: 500;
+    }
+
+    @media print {
+      .cover-page {
+        height: auto;
+        padding: 20px;
+        page-break-after: always;
+      }
+
+      .page {
+        page-break-before: always;
+        page-break-after: always;
+      }
+
+      .page:first-child {
+        page-break-before: auto;
+      }
+
+      .companies-grid {
+        /* Print layout: 5 columns to fit 10 companies (2 rows) nicely on an A4 page */
+        grid-template-columns: repeat(5, 1fr);
+        gap: 10px;
+        justify-items: center;
+        justify-content: center;
+        max-width: 100%;
+        margin: 0 auto;
+      }
+
+      .company {
+        box-shadow: none;
+        page-break-inside: avoid;
+        margin: 5px;
+        padding: 10px;
+        border: 1px solid #e5e7eb;
+        /* Flexible height with minimum */
+        min-height: 200px;
+        height: auto;
+        width: calc(100% - 10px);
+        font-size: 11px;
+        box-sizing: border-box;
+        overflow: visible;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .company h3 {
+        font-size: 16px;
+        min-height: auto;
+        margin-bottom: 8px;
+        line-height: 1.2;
+      }
+
+      .company img {
+        max-width: 70px;
+        height: 50px;
+        margin-bottom: 8px;
+        flex-shrink: 0;
+      }
+
+      .company p {
+        font-size: 10px;
+        margin: 3px 0;
+        line-height: 1.3;
+        word-wrap: break-word;
+      }
+
+      .company .news {
+        font-size: 9px;
+        padding: 5px;
+        margin-top: auto;
+      }
+
+      /* Create page groups for every 10 companies */
+      .companies-page-group {
+        page-break-after: always;
+        page-break-inside: avoid;
+        display: grid;
+        grid-template-columns: repeat(5, minmax(180px, 200px));
+        gap: 12px;
+        margin: 0 auto;
+        padding: 30px;
+        width: 100%;
+        justify-content: center;
+        align-content: center;
+        min-height: 100vh;
+        box-sizing: border-box;
+        grid-auto-rows: minmax(280px, auto);
+      }
+
+      /* When less than 5 companies, don't stretch them */
+      .companies-page-group.partial-group {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 200px));
+      }
+
+      /* Hide original grid in print */
+      .companies-grid {
+        display: contents;
+      }
+
+      /* Special handling for print layout */
+      .category {
+        page-break-inside: auto;
+      }
+
+      /* Footer as full last page in print */
+      footer {
+        page-break-before: always;
+        min-height: 100vh;
+        width: 100vw;
+        margin: 0;
+        padding: 40px;
+        box-sizing: border-box;
+      }
+
+      .footer-logo {
+        margin: 20px 0;
+        padding: 15px 25px;
+      }
+
+      .footer-logo img {
+        height: 40px;
+      }
+
+      footer p {
+        font-size: 16px;
+      }
+
+      /* Full-page category dividers in print */
+      .category-divider {
+        height: 100vh;
+        width: 100vw;
+        page-break-before: always;
+        page-break-after: always;
+        margin: 0;
+        padding: 40px;
+        box-sizing: border-box;
+      }
+
+      .category-divider h2 {
+        font-size: 56px;
+      }
+
+      .category-divider p {
+        font-size: 20px;
+      }
+
+      .category-divider .company-count {
+        font-size: 40px;
+      }
+
+      /* Center content on page */
+      .content {
+        margin: 0;
+        padding: 0;
+      }
+
+      /* Ensure page-level centering */
+      @page {
+        margin: 0;
+        size: A4;
+      }
+
+      /* Additional centering for the grid groups */
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        overflow-x: hidden;
+      }
+
+      .page {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+      }
+
+      /* Ensure TOC fits on one page */
+      .toc-container {
+        gap: 10px;
+        max-width: 100%;
+        padding: 0 15px;
+      }
+
+      .toc-item {
+        padding: 12px;
+        background: white;
+        border: 1px solid #d1d5db;
+      }
+
+      .toc-item h3 {
+        font-size: 16px;
+        margin-bottom: 6px;
+      }
+
+      .toc-item p {
+        font-size: 11px;
+        line-height: 1.3;
+      }
+
+      /* Cover page adjustments for print */
+      .cover-page {
+        padding: 30px;
+        height: 100vh;
+        width: 100vw;
+        box-sizing: border-box;
+        margin: 0;
+      }
+
+      .cover-page h1 {
+        font-size: 60px;
+        margin-bottom: 10px;
+      }
+
+      .cover-page .tagline {
+        font-size: 24px;
+        margin-bottom: 15px;
+      }
+
+      .cover-page .details {
+        font-size: 20px;
+      }
+
+      .cover-logo {
+        max-width: 200px;
+        margin-bottom: 20px;
+      }
+
+      .cover-dalus-attribution {
+        bottom: 20px;
+        right: 20px;
+        padding: 10px 15px;
+      }
+
+      .cover-dalus-attribution img {
+        height: 30px;
+      }
+
+      .cover-dalus-attribution span {
+        font-size: 14px;
+      }
+
+      .category {
+        page-break-inside: avoid;
+        margin-bottom: 40px;
+      }
+
+      .category.new-page {
+        page-break-before: always;
+      }
+
+      footer {
+        page-break-before: always;
+      }
+
+      .page-break {
+        page-break-before: always;
+      }
+
+      .page-break-after {
+        page-break-after: always;
+      }
+    }
+
+    .toc-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      padding: 0 20px;
+    }
+
+    .toc-item {
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      padding: 18px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .toc-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: #1a3c6e;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+    }
+
+    .toc-item:hover {
+      transform: translateY(-2px);
+      background: white;
+      border-color: #1a3c6e;
+    }
+
+    .toc-item:hover::before {
+      transform: translateX(0);
+    }
+
+    .toc-item h3 {
+      margin: 0 0 8px 0;
+      font-size: 18px;
+      line-height: 1.2;
+    }
+
+    .toc-item h3 a {
+      color: #1a3c6e;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    .toc-item h3 a:hover {
+      color: #0066cc;
+    }
+
+    .toc-item p {
+      margin: 0;
+      color: #4b5563;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 768px) {
+      .companies-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .toc-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      
+      .toc-item {
+        padding: 20px;
+      }
+      
+      .toc-item h3 {
+        font-size: 20px;
+      }
+    }
+  </style>
+  <script>
+    // Reorganize companies into groups of 10 for clean printing
+    window.addEventListener('beforeprint', function() {
+      const categories = document.querySelectorAll('.category');
+      
+      categories.forEach(category => {
+        const grid = category.querySelector('.companies-grid');
+        if (!grid) return;
+        
+        const companies = Array.from(grid.querySelectorAll('.company'));
+        const categoryTitle = category.querySelector('h2').textContent;
+        const categoryId = category.id;
+        
+        // Create category divider page
+        const divider = document.createElement('div');
+        divider.className = 'category-divider';
+        divider.innerHTML = `
+          <div class="category-divider-content">
+            <h2>${categoryTitle}</h2>
+            <p>Discover ${companies.length} innovative companies transforming this sector</p>
+            <div class="company-count">${companies.length}</div>
+            <p style="font-size: 18px; opacity: 0.7;">COMPANIES</p>
+          </div>
+        `;
+        
+        // Insert divider before the category
+        category.parentElement.insertBefore(divider, category);
+        
+        // Create groups of 10 companies
+        for (let i = 0; i < companies.length; i += 10) {
+          const group = document.createElement('div');
+          const groupCompanies = companies.slice(i, i + 10);
+          
+          // Add class for partial groups
+          if (groupCompanies.length < 10) {
+            group.className = 'companies-page-group partial-group';
+          } else {
+            group.className = 'companies-page-group';
+          }
+          
+          // Add up to 10 companies to this group
+          groupCompanies.forEach(company => {
+            group.appendChild(company.cloneNode(true));
+          });
+          
+          // Insert the group after the divider
+          category.parentElement.insertBefore(group, category);
+        }
+        
+        // Hide the original category
+        category.style.display = 'none';
+      });
+    });
+    
+    // Restore original layout after printing
+    window.addEventListener('afterprint', function() {
+      // Remove the print groups and dividers
+      document.querySelectorAll('.companies-page-group, .category-divider').forEach(element => {
+        element.remove();
+      });
+      
+      // Show the original categories again
+      document.querySelectorAll('.category').forEach(category => {
+        category.style.display = '';
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <div class="page">
+    <div class="cover-page">
+      <img src="https://pbs.twimg.com/profile_images/1906364200827396096/1e7FGvFG.jpg" alt="Reindustrialize Summit Logo"
+        class="cover-logo">
+      <h1>Reindustrialize Summit 2025</h1>
+      <p class="tagline">Modernize the U.S. Industrial Base: Convening Leaders in Technology, Manufacturing, Government,
+        and Defense</p>
+      <p class="details">Detroit, MI | July 16-17, 2025</p>
+      <div class="cover-dalus-attribution">
+        <a href="https://dalus.io" target="_blank" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit;">
+          <img src="https://img.logo.dev/dalus.io?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png" alt="Dalus Logo">
+          <span>This report is brought to you by Dalus</span>
+        </a>
+      </div>
+    </div>
+  </div>
+  
+  <div class="page">
+    <div class="content">
+      <h1>Table of Contents</h1>
+      <div class="toc-container">
+        <div class="toc-item">
+          <h3><a href="#ai-software">AI and Software for Manufacturing</a></h3>
+          <p>37 companies developing AI platforms, simulation tools, and software solutions for modern manufacturing operations</p>
+        </div>
+        <div class="toc-item">
+          <h3><a href="#autonomous-production">Autonomous Production Platforms</a></h3>
+          <p>13 companies building fully automated factory systems and autonomous manufacturing platforms</p>
+        </div>
+        <div class="toc-item">
+          <h3><a href="#robotics-automation">Robotics and Automation</a></h3>
+          <p>24 companies creating industrial robots, automation systems, and robotic solutions for manufacturing</p>
+        </div>
+        <div class="toc-item">
+          <h3><a href="#manufacturing-services">Manufacturing and Design Services</a></h3>
+          <p>34 companies providing end-to-end manufacturing services, precision machining, and design consultancy</p>
+        </div>
+        <div class="toc-item">
+          <h3><a href="#defense-security">Defense and Security</a></h3>
+          <p>9 companies developing defense technologies, security platforms, and military-grade systems</p>
+        </div>
+        <div class="toc-item">
+          <h3><a href="#industrial-commerce">Industrial Commerce</a></h3>
+          <p>3 companies modernizing industrial supply chains, logistics, and commerce platforms</p>
+        </div>
+        <div class="toc-item">
+          <h3><a href="#energy-storage">Energy Storage and Materials</a></h3>
+          <p>12 companies advancing battery technology, energy storage systems, and critical materials</p>
+        </div>
+        <div class="toc-item">
+          <h3><a href="#aerospace-mobility">Aerospace and Mobility</a></h3>
+          <p>8 companies developing electric aircraft, seagliders, and next-generation mobility solutions</p>
+        </div>
+        <div class="toc-item">
+          <h3><a href="#sustainability">Sustainability and Infrastructure</a></h3>
+          <p>2 companies creating sustainable solutions and critical infrastructure technologies</p>
+        </div>
+        <div class="toc-item">
+          <h3><a href="#nuclear-energy">Nuclear and Advanced Energy</a></h3>
+          <p>1 company advancing nuclear fuel recycling and next-generation reactor technologies</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="page">
+    <div class="content">
+      <h1>Featured Companies</h1>
+
+      <div class="category" id="ai-software">
+        <h2>AI and Software for Manufacturing</h2>
+      <div class="companies-grid">
+        <div class="company">
+          <h3>ProDex Labs</h3>
+          <img src="https://img.logo.dev/prodexlabs.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="ProDex Labs Logo" />
+          <p><strong>Description:</strong> AI "simulation-backed process engineer" to run next-gen manufacturing lines.
+          </p>
+          <p><strong>Website:</strong> <a href="https://www.prodexlabs.com">www.prodexlabs.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Maihem</h3>
+          <img src="https://img.logo.dev/maihem.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Maihem Logo" />
+          <p><strong>Description:</strong> AI software that streamlines robotic automation deployments on factory
+            floors.</p>
+          <p><strong>Website:</strong> <a href="https://www.maihem.com">www.maihem.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Pull Systems</h3>
+          <img src="https://img.logo.dev/pull.systems?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Pull Systems Logo" />
+          <p><strong>Description:</strong> AI workflow engine that saves engineering teams thousands of hours annually.
+          </p>
+          <p><strong>Website:</strong> <a href="https://pull.systems">pull.systems</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Realm Alliance</h3>
+          <img src="https://img.logo.dev/realmalliance.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Realm Alliance Logo" />
+          <p><strong>Description:</strong> AI/computer-vision platform that prevents downtime in mines and heavy
+            industry.</p>
+          <p><strong>Website:</strong> <a href="https://realmalliance.com">realmalliance.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Delta Bravo AI</h3>
+          <img src="https://img.logo.dev/deltabravo.ai?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Delta Bravo AI Logo" />
+          <p><strong>Description:</strong> AI product that upskills plant teams and simplifies day-to-day operations.
+          </p>
+          <p><strong>Website:</strong> <a href="https://deltabravo.ai">deltabravo.ai</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>DigiFabster</h3>
+          <img src="https://img.logo.dev/digifabster.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="DigiFabster Logo" />
+          <p><strong>Description:</strong> SaaS that lets machine shops auto-quote and price custom parts in minutes.
+          </p>
+          <p><strong>Website:</strong> <a href="https://digifabster.com">digifabster.com</a></p>
+          <p class="news">Apr 2025 – DigiFabster rolls out its AI-Powered Quote Agent that converts RFQ emails into
+            draft quotes within minutes. (DigiFabster)</p>
+        </div>
+        <div class="company">
+          <h3>First Resonance</h3>
+          <img src="https://img.logo.dev/firstresonance.io?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="First Resonance Logo" />
+          <p><strong>Description:</strong> ION MES platform for build/test/traceability in hardware manufacturing.</p>
+          <p><strong>Website:</strong> <a href="https://www.firstresonance.io">www.firstresonance.io</a></p>
+          <p class="news">24 Jun 2025 – First Resonance launches ION Intelligence, a new Factory OS, and ION Marketplace
+            to speed modern manufacturing. PR Newswire</p>
+        </div>
+        <div class="company">
+          <h3>Sustainment</h3>
+          <img src="https://img.logo.dev/sustainment.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Sustainment Logo" />
+          <p><strong>Description:</strong> AI software building resilient U.S. manufacturing supplier networks.</p>
+          <p><strong>Website:</strong> <a href="https://www.sustainment.com">www.sustainment.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Atomic Industries</h3>
+          <img src="https://img.logo.dev/atomic.industries?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Atomic Industries Logo" />
+          <p><strong>Description:</strong> AI-driven platform that designs and manufactures precision tooling and dies
+            for high-volume production lines.</p>
+          <p><strong>Website:</strong> <a href="https://www.atomic.industries">www.atomic.industries</a></p>
+          <p class="news">Mar 2025 – Atomic Industries named to a16z's American Dynamism 50 list for AI-driven tooling.
+            Andreessen Horowitz</p>
+        </div>
+        <div class="company">
+          <h3>Palantir (Warp Speed team)</h3>
+          <img src="https://img.logo.dev/palantir.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Palantir (Warp Speed team) Logo" />
+          <p><strong>Description:</strong> Industrial data-operations platform (Foundry) used to optimize manufacturing,
+            supply-chain, and defense logistics workflows.</p>
+          <p><strong>Website:</strong> <a
+              href="https://www.palantir.com/platforms/foundry">www.palantir.com/platforms/foundry</a></p>
+          <p class="news">8 Jul 2025 – Palantir's Warp Speed manufacturing platform expands via new U.S. Navy
+            partnership. Investors.com</p>
+        </div>
+        <div class="company">
+          <h3>Applied Intuition</h3>
+          <img src="https://img.logo.dev/applied.co?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Applied Intuition Logo" />
+          <p><strong>Description:</strong> Simulation, validation, and autonomy-development software accelerating
+            deployment of robotics and autonomous vehicles.</p>
+          <p><strong>Website:</strong> <a href="https://www.applied.co">www.applied.co</a></p>
+          <p class="news">17 Jun 2025 – Applied Intuition closes $600 M Series F at a $15 B valuation to accelerate
+            autonomy software. Applied Intuition</p>
+        </div>
+        <div class="company">
+          <h3>Hypergiant</h3>
+          <img src="https://img.logo.dev/hypergiant.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Hypergiant Logo" />
+          <p><strong>Description:</strong> AI-powered software and edge systems for command-and-control, space
+            situational awareness, and industrial resiliency.</p>
+          <p><strong>Website:</strong> <a href="https://www.hypergiant.com">www.hypergiant.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Togy AI</h3>
+          <img src="https://img.logo.dev/togy.ai?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Togy AI Logo" />
+          <p><strong>Description:</strong> AI-driven software that automates precision-manufacturing workflows on the
+            path to fully autonomous factories.</p>
+          <p><strong>Website:</strong> <a href="https://www.togy.ai">www.togy.ai</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>EARTH AI</h3>
+          <img src="https://img.logo.dev/earth-ai.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="EARTH AI Logo" />
+          <p><strong>Description:</strong> AI-guided mineral-exploration and low-disturbance drilling system discovering
+            new critical-metal deposits.</p>
+          <p><strong>Website:</strong> <a href="https://earth-ai.com">earth-ai.com</a></p>
+          <p class="news">7 Jul 2025 – Earth AI reports high-grade indium discovery at its Kooranjie project. MINING.COM
+          </p>
+        </div>
+        <div class="company">
+          <h3>Zenode</h3>
+          <img src="https://img.logo.dev/zenode.ai?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Zenode Logo" />
+          <p><strong>Description:</strong> Free AI component–search engine that optimizes electronic BOMs and slashes
+            engineers' datasheet grunt work.</p>
+          <p><strong>Website:</strong> <a href="https://zenode.ai">zenode.ai</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Delta Bravo Artificial Intelligence</h3>
+          <img src="https://img.logo.dev/deltabravo.ai?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Delta Bravo Artificial Intelligence Logo" />
+          <p><strong>Description:</strong> AI platform that converts plant sensor data into predictive quality,
+            throughput, and maintenance insights.</p>
+          <p><strong>Website:</strong> <a href="https://deltabravo.ai">deltabravo.ai</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Tulip Interfaces</h3>
+          <img src="https://img.logo.dev/tulip.co?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Tulip Interfaces Logo" />
+          <p><strong>Description:</strong> No-code manufacturing-app platform that lets factory teams create and deploy
+            their own MES, quality, and work-instruction applications in hours.</p>
+          <p><strong>Website:</strong> <a href="https://tulip.co">tulip.co</a></p>
+          <p class="news">31 Mar 2025 – Tulip shows "Composable Operations" Factory OS at Hannover Messe 2025. Tulip</p>
+        </div>
+        <div class="company">
+          <h3>Altana</h3>
+          <img src="https://img.logo.dev/altana.ai?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Altana Logo" />
+          <p><strong>Description:</strong> AI-powered "global supply-chain operating system" that gives manufacturers
+            and governments real-time visibility into suppliers, trade flows, and risk.</p>
+          <p><strong>Website:</strong> <a href="https://altana.ai">altana.ai</a></p>
+          <p class="news">11 Jun 2025 – UK Department for Business & Trade chooses Altana to power its Global Supply
+            Chain Intelligence Programme. Altana</p>
+        </div>
+        <div class="company">
+          <h3>OnTrac AI</h3>
+          <img src="https://img.logo.dev/ontracai.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="OnTrac AI Logo" />
+          <p><strong>Description:</strong> Cloud platform that brings advanced analytics and AI to small & mid-size
+            manufacturers—optimizing quoting, scheduling, and shop-floor performance.</p>
+          <p><strong>Website:</strong> <a href="https://ontracai.com">ontracai.com</a></p>
+          <p class="news">Jun 2025 – OnTrac AI wins "Growth Partner of the Year" at Automation Anywhere Imagine.
+            LinkedIn</p>
+        </div>
+        <div class="company">
+          <h3>Antithesis</h3>
+          <img src="https://img.logo.dev/antithesis.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Antithesis Logo" />
+          <p><strong>Description:</strong> Autonomous software-testing platform that finds edge-case failures in complex
+            industrial and defense codebases before deployment.</p>
+          <p><strong>Website:</strong> <a href="https://antithesis.com">antithesis.com</a></p>
+          <p class="news">6 May 2025 – Antithesis reports rapid uptake of its autonomous software-testing platform in
+            fintech deployments. PR Newswire</p>
+        </div>
+        <div class="company">
+          <h3>FleetGlue</h3>
+          <img src="https://img.logo.dev/fleetglue.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="FleetGlue Logo" />
+          <p><strong>Description:</strong> Robotics-software layer that unifies mobile robots, fixed automation, and
+            legacy industrial systems into a single operational platform for factories.</p>
+          <p><strong>Website:</strong> <a href="https://www.fleetglue.com">www.fleetglue.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Navier AI</h3>
+          <img src="https://img.logo.dev/navier.ai?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Navier AI Logo" />
+          <p><strong>Description:</strong> Physics-ML simulation engine and AI engineering agent that automate
+            high-fidelity analysis for aerospace, automotive, and maritime design teams.</p>
+          <p><strong>Website:</strong> <a href="https://navier.ai">navier.ai</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>FLIP AI</h3>
+          <img src="https://img.logo.dev/goflip.ai?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="FLIP AI Logo" />
+          <p><strong>Description:</strong> AI-driven fleet-and-asset management platform already adopted by the U.S. Air
+            Force; streamlines maintenance workflows and raises readiness.</p>
+          <p><strong>Website:</strong> <a href="https://goflip.ai">goflip.ai</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Noramark</h3>
+          <img src="https://img.logo.dev/noramark.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Noramark Logo" />
+          <p><strong>Description:</strong> Business-intelligence SaaS that ingests ERP + public-data feeds to pinpoint
+            sales leads, reshoring incentives, and growth strategies for U.S. job-shops and OEMs.</p>
+          <p><strong>Website:</strong> <a href="https://noramark.com">noramark.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Dalus</h3>
+          <img src="https://img.logo.dev/dalus.io?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Dalus Logo" />
+          <p><strong>Description:</strong> Cloud model-based-systems-engineering (MBSE) platform that lets hardware
+            teams co-design mechanics, electronics, and software in one digital thread.</p>
+          <p><strong>Website:</strong> <a href="https://dalus.io">dalus.io</a></p>
+          <p class="news">Mar 2025 – Dalus publishes "Why Dalus? The Future of Systems Engineering," outlining its cloud
+            MBSE roadmap. dalus.io</p>
+        </div>
+        <div class="company">
+          <h3>Zima Labs</h3>
+          <p><strong>Description:</strong> Generates photorealistic synthetic training data directly from CAD/3-D
+            assets, slashing the cost of machine-vision model development for factories.</p>
+          <p><strong>Website:</strong> N/A</p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>ScoutCities</h3>
+          <img src="https://img.logo.dev/scoutcities.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="ScoutCities Logo" />
+          <p><strong>Description:</strong> AI site-selection engine that scores U.S. industrial properties on power,
+            labor, incentives, and supply-chain proximity—de-risking plant builds.</p>
+          <p><strong>Website:</strong> <a href="https://scoutcities.com">scoutcities.com</a></p>
+          <p class="news">Apr 20 2025 – ScoutCities blog details new AI tools that speed demographic mapping for
+            industrial site selection. Scout</p>
+        </div>
+        <div class="company">
+          <h3>Root Access</h3>
+          <img src="https://img.logo.dev/rootaccess.ai?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Root Access Logo" />
+          <p><strong>Description:</strong> AI-native platform that auto-generates and deploys control/communication code
+            for robotics and industrial hardware systems.</p>
+          <p><strong>Website:</strong> <a href="https://rootaccess.ai">rootaccess.ai</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>TryTaiga</h3>
+          <img src="https://img.logo.dev/trytaiga.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="TryTaiga Logo" />
+          <p><strong>Description:</strong> Cloud MES + machining-automation toolkit that digitizes tooling, fixtures,
+            and precision-part workflows for defense and energy OEMs.</p>
+          <p><strong>Website:</strong> <a href="https://trytaiga.com">trytaiga.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Dirac</h3>
+          <img src="https://img.logo.dev/diracinc.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Dirac Logo" />
+          <p><strong>Description:</strong> Context-aware production-planning engine that generates and updates digital
+            work instructions automatically for Tier-1/2/3 discrete manufacturers.</p>
+          <p><strong>Website:</strong> <a href="https://www.diracinc.com">www.diracinc.com</a></p>
+          <p class="news">6 May 2025 – Dirac announced a strategic partnership with Fairlead to bring context-aware
+            production-planning software to U.S. shipbuilding. TMCnet</p>
+        </div>
+        <div class="company">
+          <h3>F4 Industries</h3>
+          <p><strong>Description:</strong> AI-driven CAD/CAM toolchain that eliminates GD&T guesswork—auto-deriving
+            manufacturable tolerances straight from 3-D models.</p>
+          <p><strong>Website:</strong> N/A</p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Sustainment Technologies</h3>
+          <img src="https://img.logo.dev/sustainment.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Sustainment Technologies Logo" />
+          <p><strong>Description:</strong> Agent-based supply-chain platform that maps 250 k+ U.S. machine shops and
+            automatically routes RFQs, QA data and logistics to eliminate "no-bid" and DMSMS parts in the defense
+            industrial base.</p>
+          <p><strong>Website:</strong> <a href="https://www.sustainment.com">www.sustainment.com</a></p>
+          <p class="news">3 Apr 2025 – Sustainment Technologies posted a supply-chain strategy update on tariffs and
+            localization. sustainment.com</p>
+        </div>
+        <div class="company">
+          <h3>nTop</h3>
+          <img src="https://img.logo.dev/ntop.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="nTop Logo" />
+          <p><strong>Description:</strong> GPU-accelerated engineering-design software that lets aerospace & weapons
+            engineers generate lattice, thermal, and lightweight structures in minutes and export directly to
+            additive-manufacturing tool-paths.</p>
+          <p><strong>Website:</strong> <a href="https://ntop.com">ntop.com</a></p>
+          <p class="news">30 Jun 2025 – nTop released version 5.25 with a new user dashboard and training course.
+            support.ntop.com</p>
+        </div>
+        <div class="company">
+          <h3>NORAMARK</h3>
+          <img src="https://img.logo.dev/noramark.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="NORAMARK Logo" />
+          <p><strong>Description:</strong> Cloud "industrial Bloomberg" that ingests ERP, machine and macro data from
+            U.S. job-shops, benchmarks cost & capacity, then surfaces reshoring incentives and growth leads—giving SME
+            manufacturers real-time business-intelligence to win and schedule work.</p>
+          <p><strong>Website:</strong> <a href="https://noramark.com">noramark.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>LimitlessCNC</h3>
+          <img src="https://img.logo.dev/limitlesscnc.ai?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="LimitlessCNC Logo" />
+          <p><strong>Description:</strong> AI CAM co-pilot that reads 3-D CAD, suggests toolpaths, feeds & speeds in
+            real time, and captures tribal machinist know-how—shrinking programming hours and improving first-article
+            success for high-mix, low-volume CNC shops.</p>
+          <p><strong>Website:</strong> <a href="https://limitlesscnc.ai">limitlesscnc.ai</a></p>
+          <p class="news">Mar 19 2025 – Exited stealth with a $4.1 million seed round to launch its AI CAM co-pilot for
+            CNC machining. Lucidity Insights</p>
+        </div>
+        <div class="company">
+          <h3>Gild</h3>
+          <img src="https://img.logo.dev/getgild.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Gild Logo" />
+          <p><strong>Description:</strong> AI workforce-allocation engine that matches skilled-trades talent to live
+            projects, letting construction and factory operators build right-sized crews, cut overtime and de-risk
+            capacity across America's industrial labor pool.</p>
+          <p><strong>Website:</strong> <a href="https://getgild.com">getgild.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+      </div>
+    </div>
+    <div class="page-break-after"></div>
+
+    <div class="category new-page" id="autonomous-production">
+      <h2>Autonomous Production Platforms</h2>
+      <div class="companies-grid">
+        <div class="company">
+          <h3>Brittle Fluid</h3>
+          <img src="https://img.logo.dev/brittlefluid.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Brittle Fluid Logo" />
+          <p><strong>Description:</strong> Software-driven autonomous factory platform for fully automated production.
+          </p>
+          <p><strong>Website:</strong> <a href="https://brittlefluid.com">brittlefluid.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Valstad Shipworks</h3>
+          <img src="https://img.logo.dev/valstad.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Valstad Shipworks Logo" />
+          <p><strong>Description:</strong> Fully automated shipyards designed to 100× U.S. commercial maritime output.
+          </p>
+          <p><strong>Website:</strong> <a href="https://valstad.com">valstad.com</a></p>
+          <p class="news">18 Apr 2025 – Founder Dustin Walper argues for U.S. shipbuilding revival in a LinkedIn essay
+            on new Section 301 maritime tariffs. (LinkedIn)</p>
+        </div>
+        <div class="company">
+          <h3>Nimble Precision</h3>
+          <img src="https://img.logo.dev/nimbleprecision.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Nimble Precision Logo" />
+          <p><strong>Description:</strong> Fully autonomous, American circuit-board factories that combine robotics and
+            AI for high-throughput PCB production.</p>
+          <p><strong>Website:</strong> <a href="https://nimbleprecision.com">nimbleprecision.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Raven Space Systems</h3>
+          <img src="https://img.logo.dev/ravenspacesystems.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Raven Space Systems Logo" />
+          <p><strong>Description:</strong> Autonomous composite-printing factories producing thermal-protection systems
+            and structures for aerospace & defense.</p>
+          <p><strong>Website:</strong> <a href="https://www.ravenspacesystems.com">www.ravenspacesystems.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>XENOPS</h3>
+          <p><strong>Description:</strong> Autonomous, modular factory systems designed to manufacture products rapidly
+            on Earth—and eventually in space.</p>
+          <p><strong>Website:</strong> N/A</p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>JetZero</h3>
+          <img src="https://img.logo.dev/jetzero.aero?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="JetZero Logo" />
+          <p><strong>Description:</strong> Blended-wing-body aircraft platform and "factory of the future" leveraging
+            industrial AI and autonomous quality assurance.</p>
+          <p><strong>Website:</strong> <a href="https://www.jetzero.aero">www.jetzero.aero</a></p>
+          <p class="news">12 Jun 2025 – JetZero picks Greensboro, NC for its first advanced-manufacturing facility.
+            jetzero.aero</p>
+        </div>
+        <div class="company">
+          <h3>Augrade</h3>
+          <img src="https://img.logo.dev/augrade.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Augrade Logo" />
+          <p><strong>Description:</strong> Autonomous-robotics startup developing AI-driven industrial systems to boost
+            U.S. manufacturing productivity and critical-infrastructure resilience.</p>
+          <p><strong>Website:</strong> <a href="https://www.augrade.com">www.augrade.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>GRAM</h3>
+          <p><strong>Description:</strong> General-purpose heavy-industry robots designed for harsh factory and space
+            environments, built and tested in El Segundo, CA.</p>
+          <p><strong>Website:</strong> N/A</p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>ZEUS (Zero Emissions US-built Ships)</h3>
+          <img src="https://img.logo.dev/buildzeus.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="ZEUS (Zero Emissions US-built Ships) Logo" />
+          <p><strong>Description:</strong> Ground-up effort to design and manufacture zero-emission cargo vessels
+            entirely in the United States, integrating advanced propulsion and shipyard automation.</p>
+          <p><strong>Website:</strong> <a href="https://www.buildzeus.com">www.buildzeus.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Flamefront Propulsion</h3>
+          <p><strong>Description:</strong> Building an automated jet-engine factory in El Segundo to mass-produce small,
+            efficient turbines for drones and advanced air vehicles.</p>
+          <p><strong>Website:</strong> N/A</p>
+          <p class="news">Apr 2025 – Flamefront Propulsion named among Discipulus Ventures' five new defense-tech
+            investments for 2025. LinkedIn</p>
+        </div>
+        <div class="company">
+          <h3>Loombotic</h3>
+          <img src="https://img.logo.dev/loombotic.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Loombotic Logo" />
+          <p><strong>Description:</strong> Y-Combinator–backed, fully automated wire-harness factory that pairs robotics
+            with in-house CAD/CAM to deliver custom looms in days.</p>
+          <p><strong>Website:</strong> <a href="https://loombotic.com">loombotic.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Admares</h3>
+          <img src="https://img.logo.dev/admares.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Admares Logo" />
+          <p><strong>Description:</strong> 3 million ft² Porsche/Siemens-backed U.S. factory (first of several) that
+            will turn out a finished, AI-inspected, steel-modular home every 45 minutes—industrializing housing the way
+            car plants build SUVs.</p>
+          <p><strong>Website:</strong> <a href="https://admares.com">admares.com</a></p>
+          <p class="news">4 Mar 2025 – Admares presented its AI-inspected modular-home factory concept at World of
+            Modular 2025 in Las Vegas. ADMARES</p>
+        </div>
+        <div class="company">
+          <h3>Origin North</h3>
+          <p><strong>Description:</strong> First domestic, low-carbon soy-protein-isolate refinery: an automated
+            fractionation line that on-shores a critical food/biomanufacturing ingredient and delivers full supply-chain
+            transparency from North-American soy farms to processors.</p>
+          <p><strong>Website:</strong> N/A</p>
+          <p class="news">No recent news found.</p>
+        </div>
+      </div>
+    </div>
+    <div class="page-break-after"></div>
+
+    <div class="category new-page" id="robotics-automation">
+      <h2>Robotics and Automation</h2>
+      <div class="companies-grid">
+        <div class="company">
+          <h3>Boston Dynamics</h3>
+          <img src="https://img.logo.dev/bostondynamics.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Boston Dynamics Logo" />
+          <p><strong>Description:</strong> Mobile robots (e.g., Spot, Stretch) for logistics and factory automation.</p>
+          <p><strong>Website:</strong> <a href="https://bostondynamics.com">bostondynamics.com</a></p>
+          <p class="news">3 Jul 2025 – Hyundai's Georgia Metaplant to deploy Boston Dynamics' Atlas humanoid robot for
+            trial operations later this year. (Korea Joongang Daily)</p>
+        </div>
+        <div class="company">
+          <h3>Thoron</h3>
+          <img src="https://img.logo.dev/thoron.io?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Thoron Logo" />
+          <p><strong>Description:</strong> Fully vertically integrated, U.S.-made enterprise drones for industrial ops.
+          </p>
+          <p><strong>Website:</strong> <a href="https://thoron.io">thoron.io</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>SAEKI</h3>
+          <img src="https://img.logo.dev/saeki.ch?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="SAEKI Logo" />
+          <p><strong>Description:</strong> Large-format robotic machining/additive systems that manufacture complex
+            parts rapidly for aerospace & industrial users.</p>
+          <p><strong>Website:</strong> <a href="https://www.saeki.ch">www.saeki.ch</a></p>
+          <p class="news">5 Feb 2025 – SAEKI raises $6.7 M seed round to advance large-format robotic machining &
+            additive systems. GlobeNewswire</p>
+        </div>
+        <div class="company">
+          <h3>Gecko Robotics</h3>
+          <img src="https://img.logo.dev/geckorobotics.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Gecko Robotics Logo" />
+          <p><strong>Description:</strong> Wall-climbing inspection robots plus analytics platform that detect defects
+            in industrial and defense infrastructure.</p>
+          <p><strong>Website:</strong> <a href="https://www.geckorobotics.com">www.geckorobotics.com</a></p>
+          <p class="news">Jun 2025 – Gecko Robotics reaches unicorn status amid surging demand for its inspection
+            robots. Gecko Robotics</p>
+        </div>
+        <div class="company">
+          <h3>GrayMatter Robotics</h3>
+          <img src="https://img.logo.dev/graymatter-robotics.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="GrayMatter Robotics Logo" />
+          <p><strong>Description:</strong> Physical AI robots that handle sanding, polishing, and surface-treatment
+            tasks across 30+ North-American factories.</p>
+          <p><strong>Website:</strong> <a href="https://graymatter-robotics.com">graymatter-robotics.com</a></p>
+          <p class="news">6 Jun 2025 – Blog "Navigating the Future: AI Robotics in Specialty Vehicle Manufacturing"
+            showcases GrayMatter's deployments. GrayMatter Robotics</p>
+        </div>
+        <div class="company">
+          <h3>Formic</h3>
+          <img src="https://img.logo.dev/formic.co?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Formic Logo" />
+          <p><strong>Description:</strong> "Robotics-as-a-Service" platform deploying and operating robot workcells
+            across 100+ U.S. factories.</p>
+          <p><strong>Website:</strong> <a href="https://formic.co">formic.co</a></p>
+          <p class="news">16 Jul 2025 – Formic slated to present at Reindustrialize 2025 in Detroit on manufacturing
+            technology. Formic</p>
+        </div>
+        <div class="company">
+          <h3>BOT Auto</h3>
+          <img src="https://img.logo.dev/bot.auto?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="BOT Auto Logo" />
+          <p><strong>Description:</strong> Level-4 autonomous freight-truck platform already running customer loads on
+            I-10; driver-out ops slated for 2025.</p>
+          <p><strong>Website:</strong> <a href="https://bot.auto">bot.auto</a></p>
+          <p class="news">8 May 2025 – Houston Chronicle details Bot Auto's driver-out autonomous-trucking plans on
+            Texas highways. Houston Chronicle</p>
+        </div>
+        <div class="company">
+          <h3>Blue Water Autonomy</h3>
+          <img src="https://img.logo.dev/blw.ai?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Blue Water Autonomy Logo" />
+          <p><strong>Description:</strong> Autonomous surface vessels for the U.S. Navy and commercial operators, aimed
+            at fixing U.S. shipbuilding throughput.</p>
+          <p><strong>Website:</strong> <a href="https://blw.ai">blw.ai</a></p>
+          <p class="news">17 Jun 2025 – "Steel and Silicon" article highlights Blue Water Autonomy's role in U.S.
+            shipbuilding tech. blw.ai</p>
+        </div>
+        <div class="company">
+          <h3>AAA20 Group (Robot-as-a-Service)</h3>
+          <img src="https://img.logo.dev/aaa20group.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="AAA20 Group (Robot-as-a-Service) Logo" />
+          <p><strong>Description:</strong> Deploys industrial robots on a subscription basis, lowering upfront cap-ex
+            and accelerating automation for machining and fabrication shops.</p>
+          <p><strong>Website:</strong> <a href="https://aaa20group.com">aaa20group.com</a></p>
+          <p class="news">9 Jun 2025 – AAA20 Group opens a 9 000 ft² Las Vegas robotic-manufacturing complex to scale
+            its rent-a-robot service. Vegas Inc.</p>
+        </div>
+        <div class="company">
+          <h3>FANUC America – Automation Systems Group</h3>
+          <img src="https://img.logo.dev/fanucamerica.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="FANUC America – Automation Systems Group Logo" />
+          <p><strong>Description:</strong> Turn-key robotic cells and fully-integrated production lines (welding,
+            painting, assembly, palletizing) delivered by a 150-engineer team for high-volume U.S. factories.</p>
+          <p><strong>Website:</strong> <a href="https://www.fanucamerica.com">www.fanucamerica.com</a></p>
+          <p class="news">28 Apr 2025 – FANUC America previews new industrial and collaborative robots ahead of Automate
+            2025. fanucamerica</p>
+        </div>
+        <div class="company">
+          <h3>Lucid Bots</h3>
+          <img src="https://img.logo.dev/lucidbots.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Lucid Bots Logo" />
+          <p><strong>Description:</strong> Aerial and ground robots that automate dull, dirty, and dangerous
+            exterior-cleaning jobs—400+ units already operating across commercial sites in the U.S.</p>
+          <p><strong>Website:</strong> <a href="https://lucidbots.com">lucidbots.com</a></p>
+          <p class="news">Jun 2025 – Lucid Bots publishes an industry forecast outlining key trends in drone-based
+            exterior-cleaning. Lucid Bots</p>
+        </div>
+        <div class="company">
+          <h3>Tetra Dynamics</h3>
+          <p><strong>Description:</strong> Low-cost, dexterous robotic hand plus the AI stack to perform useful
+            industrial tasks—seeking U.S. component suppliers and pilot customers.</p>
+          <p><strong>Website:</strong> N/A</p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Amidon Heavy Industries</h3>
+          <p><strong>Description:</strong> Marine-robotics systems for inspection and maintenance of offshore energy and
+            infrastructure assets.</p>
+          <p><strong>Website:</strong> N/A</p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Tangenta Inc.</h3>
+          <img src="https://img.logo.dev/tangenta.net?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Tangenta Inc. Logo" />
+          <p><strong>Description:</strong> Robotics and cloud software that automate U.S. aircraft maintenance, reducing
+            outsourced MRO and boosting fleet readiness.</p>
+          <p><strong>Website:</strong> <a href="https://tangenta.net">tangenta.net</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Intramotev</h3>
+          <img src="https://img.logo.dev/intramotev.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Intramotev Logo" />
+          <p><strong>Description:</strong> Self-driving, battery-electric rail-car technology that transforms standard
+            freight wagons into autonomous, zero-emission logistics vehicles.</p>
+          <p><strong>Website:</strong> <a href="https://intramotev.com">intramotev.com</a></p>
+          <p class="news">Mar 24 2025 – Intramotev appoints rail-industry veteran Harry Zander as chief commercial
+            officer. Trains</p>
+        </div>
+        <div class="company">
+          <h3>Bedrock Robotics</h3>
+          <img src="https://img.logo.dev/bedrockrobotics.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Bedrock Robotics Logo" />
+          <p><strong>Description:</strong> Industrial-robotics startup automating high-mix, labor-scarce shop-floor
+            tasks with dexterous manipulators and AI work-cell software.</p>
+          <p><strong>Website:</strong> <a href="https://bedrockrobotics.com">bedrockrobotics.com</a></p>
+          <p class="news">May 30 2025 – TechCrunch reports stealth startup Bedrock Robotics building self-driving
+            retrofit kits for heavy machinery. TechCrunch</p>
+        </div>
+        <div class="company">
+          <h3>Interlune</h3>
+          <img src="https://img.logo.dev/interlune.space?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Interlune Logo" />
+          <p><strong>Description:</strong> Lunar-resource company developing robotics and ISRU systems to mine helium-3
+            and other critical materials—kick-starting the in-space economy.</p>
+          <p><strong>Website:</strong> <a href="https://interlune.space">interlune.space</a></p>
+          <p class="news">May 7 2025 – Interlune unveils full-scale lunar regolith excavator and partners with Vermeer
+            on helium-3 mining. interlune.space</p>
+        </div>
+        <div class="company">
+          <h3>Durin</h3>
+          <img src="https://img.logo.dev/durin.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Durin Logo" />
+          <p><strong>Description:</strong> Robotics-enabled mining-supply-chain venture developing automated extraction
+            and processing solutions for critical minerals.</p>
+          <p><strong>Website:</strong> <a href="https://durin.com">durin.com</a></p>
+          <p class="news">23 Apr 2025 – Durin raised $3.4 M in pre-seed funding to automate critical-mineral drilling
+            and extraction. TechCrunch</p>
+        </div>
+        <div class="company">
+          <h3>Framework Automation</h3>
+          <img src="https://img.logo.dev/frameworkautomation.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Framework Automation Logo" />
+          <p><strong>Description:</strong> Applied-robotics integrator building turnkey automation cells for mid-sized
+            U.S. manufacturers (hiring ME/EE/SWE talent).</p>
+          <p><strong>Website:</strong> <a href="https://frameworkautomation.com">frameworkautomation.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Deft Robotics</h3>
+          <img src="https://img.logo.dev/deftai.co?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Deft Robotics Logo" />
+          <p><strong>Description:</strong> Drop-in, vision-guided robot cells that learn on-site and tackle mid-volume
+            welding, grinding and pick-and-place tasks for manufacturers priced out of traditional systems-integrator
+            projects.</p>
+          <p><strong>Website:</strong> <a href="https://deftai.co">deftai.co</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>QT Equipment</h3>
+          <img src="https://img.logo.dev/qtequipment.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="QT Equipment Logo" />
+          <p><strong>Description:</strong> Designs and builds custom work trucks—latest product is a truck-mounted
+            road-painting robot that automates hazardous striping work.</p>
+          <p><strong>Website:</strong> <a href="https://www.qtequipment.com">www.qtequipment.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>BotBuilt</h3>
+          <img src="https://img.logo.dev/botbuilt.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="BotBuilt Logo" />
+          <p><strong>Description:</strong> Vision-guided robotic framing line that cuts, nails and squares custom lumber
+            walls in minutes; enables high-mix / high-volume residential construction without standardized parts,
+            slashing cycle time and solving the skilled-carpenter shortage.</p>
+          <p><strong>Website:</strong> <a href="https://botbuilt.com">botbuilt.com</a></p>
+          <p class="news">Apr 25 2025 – Triangle Business Journal feature on its AI-robotic framing line that halves
+            housing-construction costs. The Business Journals</p>
+        </div>
+        <div class="company">
+          <h3>Orbital Composites</h3>
+          <img src="https://img.logo.dev/orbitalcomposites.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Orbital Composites Logo" />
+          <p><strong>Description:</strong> Robotic "factory-on-gantry" cells (terrestrial & in-orbit) that 3-D print
+            continuous-fiber composites for drones, hypersonics and satellite structures—combining multi-robot
+            choreography, microwave curing and in-situ inspection for rapid, autoclave-free production.</p>
+          <p><strong>Website:</strong> <a href="https://orbitalcomposites.com">orbitalcomposites.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Berry Bot Soap Maker</h3>
+          <img src="https://img.logo.dev/berrybotsoapmaker.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Berry Bot Soap Maker Logo" />
+          <p><strong>Description:</strong> Desktop, fully-enclosed cold-process soap robot that meters oils, controls
+            saponification heat and precision-cuts bars, allowing micro-producers to launch custom natural-soap lines
+            safely and at 10× the throughput of manual batching.</p>
+          <p><strong>Website:</strong> <a href="https://berrybotsoapmaker.com">berrybotsoapmaker.com</a></p>
+          <p class="news">Jun 2025 – Ranked #2 on F6S's "Top Consumer Robotics Startups on the Rise" list. LinkedIn</p>
+        </div>
+      </div>
+    </div>
+    <div class="page-break-after"></div>
+
+    <div class="category new-page" id="manufacturing-services">
+      <h2>Manufacturing and Design Services</h2>
+      <div class="companies-grid">
+        <div class="company">
+          <h3>Re:Build Manufacturing</h3>
+          <img src="https://img.logo.dev/rebuildmanufacturing.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Re:Build Manufacturing Logo" />
+          <p><strong>Description:</strong> End-to-end U.S. manufacturing group delivering design, robotics, and
+            automation.</p>
+          <p><strong>Website:</strong> <a href="https://rebuildmanufacturing.com">rebuildmanufacturing.com</a></p>
+          <p class="news">15 Jan 2025 – Re:Build launches Re:Build Battery Solutions, a new unit focused on U.S. battery
+            engineering and manufacturing. (Re:Build Manufacturing)</p>
+        </div>
+        <div class="company">
+          <h3>Siemens Government Technologies</h3>
+          <img src="https://img.logo.dev/siemensgovt.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Siemens Government Technologies Logo" />
+          <p><strong>Description:</strong> Digital-engineering, PLM, and advanced-manufacturing software for defense
+            users.</p>
+          <p><strong>Website:</strong> <a href="https://www.siemensgovt.com">www.siemensgovt.com</a></p>
+          <p class="news">4 Apr 2025 – Siemens Government Technologies wins a spot on the FBI's $400 M Enterprise
+            Facility O&M IDIQ contract. (Siemens Government)</p>
+        </div>
+        <div class="company">
+          <h3>Kform</h3>
+          <img src="https://img.logo.dev/kform.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Kform Logo" />
+          <p><strong>Description:</strong> Rapid defense-hardware design-to-production services and contract
+            manufacturing.</p>
+          <p><strong>Website:</strong> <a href="https://kform.com">kform.com</a></p>
+          <p class="news">21 Feb 2025 – Kform forms a strategic partnership with Vantiq and Deployable Technologies to
+            deliver real-time AI sensor-fusion solutions for defense. (Kform)</p>
+        </div>
+        <div class="company">
+          <h3>Teague</h3>
+          <img src="https://img.logo.dev/teague.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Teague Logo" />
+          <p><strong>Description:</strong> Advanced-tech design consultancy co-developing innovative manufactured
+            products.</p>
+          <p><strong>Website:</strong> <a href="https://teague.com">teague.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Fulcrum Technologies Inc.</h3>
+          <img src="https://img.logo.dev/fulcrum-tech.net?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Fulcrum Technologies Inc. Logo" />
+          <p><strong>Description:</strong> Precision machine bases for top semiconductor-equipment OEMs.</p>
+          <p><strong>Website:</strong> <a href="https://fulcrum-tech.net">fulcrum-tech.net</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>UAME</h3>
+          <img src="https://img.logo.dev/uame.us?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png" alt="UAME Logo" />
+          <p><strong>Description:</strong> Next-gen precision-machining firm with advanced machinists and automation.
+          </p>
+          <p><strong>Website:</strong> <a href="https://uame.us">uame.us</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Union.tech</h3>
+          <img src="https://img.logo.dev/union.tech?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Union.tech Logo" />
+          <p><strong>Description:</strong> Factory-operations group pioneering new manufacturing methods & workforce
+            upskilling.</p>
+          <p><strong>Website:</strong> <a href="https://union.tech">union.tech</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>TruCut Incorporated</h3>
+          <img src="https://img.logo.dev/trucut.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="TruCut Incorporated Logo" />
+          <p><strong>Description:</strong> Third-generation sheet-metal fabricator for defense, HVAC, and OEM markets.
+          </p>
+          <p><strong>Website:</strong> <a href="https://trucut.com">trucut.com</a></p>
+          <p class="news">Jun 2025 – TruCut highlights its sheet-metal capabilities at FarmFest 2025 expo. Facebook</p>
+        </div>
+        <div class="company">
+          <h3>H3X Technologies</h3>
+          <img src="https://img.logo.dev/h3x.tech?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="H3X Technologies Logo" />
+          <p><strong>Description:</strong> Ultra–high-power-density electric motors and integrated drivetrains for
+            aerospace, defense, marine, and heavy industry.</p>
+          <p><strong>Website:</strong> <a href="https://h3x.tech">h3x.tech</a></p>
+          <p class="news">9 Apr 2025 – H3X completes NASA Phase II contracts and begins builds of its 350 kW HPDM-350
+            electric motor. H3X Technologies</p>
+        </div>
+        <div class="company">
+          <h3>Stephen Gould</h3>
+          <img src="https://img.logo.dev/stephengould.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Stephen Gould Logo" />
+          <p><strong>Description:</strong> End-to-end packaging, kitting, and asset-tracking solutions supporting
+            aerospace and defense supply chains.</p>
+          <p><strong>Website:</strong> <a href="https://www.stephengould.com">www.stephengould.com</a></p>
+          <p class="news">26 Jun 2025 – "Packaged for Prime Time" post explains Stephen Gould's Amazon FBA packaging
+            services. Stephen Gould</p>
+        </div>
+        <div class="company">
+          <h3>Sharrow Marine</h3>
+          <img src="https://img.logo.dev/sharrowmarine.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Sharrow Marine Logo" />
+          <p><strong>Description:</strong> Sharrow™ Propeller—an ultra-efficient, low-noise marine propulsion system
+            with 160+ patents and U.S. manufacturing.</p>
+          <p><strong>Website:</strong> <a href="https://www.sharrowmarine.com">www.sharrowmarine.com</a></p>
+          <p class="news">3 Jun 2025 – Sharrow Engineering unveils plans for a nationwide manufacturing network and new
+            operations at Michigan Central. Sharrow Marine</p>
+        </div>
+        <div class="company">
+          <h3>VulcanForms</h3>
+          <img src="https://img.logo.dev/vulcanforms.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="VulcanForms Logo" />
+          <p><strong>Description:</strong> Large-scale metal additive-manufacturing foundry delivering production-grade
+            parts for defense and industrial customers.</p>
+          <p><strong>Website:</strong> <a href="https://www.vulcanforms.com">www.vulcanforms.com</a></p>
+          <p class="news">13 May 2025 – VulcanForms 3-D prints a 2 kN rocket thruster designed by LEAP 71's Noyron AI.
+            VulcanForms</p>
+        </div>
+        <div class="company">
+          <h3>Bethlehem Steel Corporation</h3>
+          <img src="https://img.logo.dev/bethsteel.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Bethlehem Steel Corporation Logo" />
+          <p><strong>Description:</strong> Reviving domestic integrated-steel production to supply critical defense and
+            industrial markets.</p>
+          <p><strong>Website:</strong> <a href="https://www.bethsteel.com">www.bethsteel.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Cooper Steel / Cooper's Steel Fabricators</h3>
+          <img src="https://img.logo.dev/coopersteel.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Cooper Steel / Cooper's Steel Fabricators Logo" />
+          <p><strong>Description:</strong> Structural- and precision-steel fabrication for large industrial and defense
+            construction projects.</p>
+          <p><strong>Website:</strong> <a href="https://www.coopersteel.com">www.coopersteel.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Fast DMS</h3>
+          <img src="https://img.logo.dev/fastdms.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Fast DMS Logo" />
+          <p><strong>Description:</strong> Arizona manufacturing shop providing welding, assembly, quality, and
+            procurement for energy & defense hardware.</p>
+          <p><strong>Website:</strong> <a href="https://fastdms.com">fastdms.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Guardian Bikes</h3>
+          <img src="https://img.logo.dev/guardianbikes.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Guardian Bikes Logo" />
+          <p><strong>Description:</strong> America's first high-volume bicycle factory, producing patented safety bikes
+            at scale in Southern Indiana.</p>
+          <p><strong>Website:</strong> <a href="https://guardianbikes.com">guardianbikes.com</a></p>
+          <p class="news">23 Apr 2025 – Guardian Bikes to open a $19 M bike-frame factory in Indiana. thefabricator.com
+          </p>
+        </div>
+        <div class="company">
+          <h3>Raglan</h3>
+          <img src="https://img.logo.dev/raglan.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Raglan Logo" />
+          <p><strong>Description:</strong> Advanced-mobility engineering firm delivering bespoke power-train solutions
+            for heavy and defense vehicles.</p>
+          <p><strong>Website:</strong> <a href="https://www.raglan.com">www.raglan.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Brady's Bend Underground</h3>
+          <img src="https://img.logo.dev/bradysbend.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Brady's Bend Underground Logo" />
+          <p><strong>Description:</strong> Converting 2,000 acres of Pennsylvania caverns into secure,
+            climate-controlled defense & energetics manufacturing space.</p>
+          <p><strong>Website:</strong> <a href="https://www.bradysbend.com">www.bradysbend.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Belden Universal</h3>
+          <img src="https://img.logo.dev/beldenuniversal.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Belden Universal Logo" />
+          <p><strong>Description:</strong> AS9100-certified machine shop manufacturing precision universal joints for
+            aerospace, defense, and med-tech.</p>
+          <p><strong>Website:</strong> <a href="https://www.beldenuniversal.com">www.beldenuniversal.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Carbon</h3>
+          <img src="https://img.logo.dev/carbon3d.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Carbon Logo" />
+          <p><strong>Description:</strong> Digital Light Synthesis (DLS) 3-D printers and resins that enable
+            production-grade additive manufacturing for aerospace, defense, medical, and consumer products.</p>
+          <p><strong>Website:</strong> <a href="https://www.carbon3d.com">www.carbon3d.com</a></p>
+          <p class="news">30 Apr 2025 – Carbon's Digital Light Synthesis enables Reusch's Attrakt Fusion Carbon 3D
+            goalkeeper-glove launch. 3dprintingjournal.com</p>
+        </div>
+        <div class="company">
+          <h3>Macrodyne Technologies</h3>
+          <img src="https://img.logo.dev/macrodynepress.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Macrodyne Technologies Logo" />
+          <p><strong>Description:</strong> North America's largest builder of custom hydraulic presses and automated
+            forming systems—now launching GO-SPF tech that speeds superplastic forming up to 20×.</p>
+          <p><strong>Website:</strong> <a href="https://macrodynepress.com">macrodynepress.com</a></p>
+          <p class="news">4 Mar 2025 – Macrodyne-Dunkes debuts GO-SPF superplastic-forming press at JEC World 2025.
+            Macrodyne</p>
+        </div>
+        <div class="company">
+          <h3>DMG MORI Federal Services</h3>
+          <img src="https://img.logo.dev/dmgmori-fs.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="DMG MORI Federal Services Logo" />
+          <p><strong>Description:</strong> 5-axis CNC, mill-turn, and hybrid additive machining centers ruggedized and
+            ITAR-compliant for U.S. defense production lines.</p>
+          <p><strong>Website:</strong> <a href="https://dmgmori-fs.com">dmgmori-fs.com</a></p>
+          <p class="news">12 Mar 2025 – MxD details how DMG MORI Federal Services and suppliers prepare for incoming
+            CMMC 2.0 rules. MxD</p>
+        </div>
+        <div class="company">
+          <h3>Aria Group</h3>
+          <img src="https://img.logo.dev/aria-group.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Aria Group Logo" />
+          <p><strong>Description:</strong> Advanced-composite prototyping and low-volume manufacturing that blends
+            design, tooling, and autoclave/RTM production under one roof.</p>
+          <p><strong>Website:</strong> <a href="https://www.aria-group.com">www.aria-group.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Blue Star NBR</h3>
+          <img src="https://img.logo.dev/bluestarnbr.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Blue Star NBR Logo" />
+          <p><strong>Description:</strong> First vertically integrated U.S. nitrile-butadiene-rubber facility producing
+            glove-grade and industrial NBR for defense, medical, and ship-building markets.</p>
+          <p><strong>Website:</strong> <a href="https://www.bluestarnbr.com">www.bluestarnbr.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Coronal Technologies</h3>
+          <img src="https://img.logo.dev/coronal.tech?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Coronal Technologies Logo" />
+          <p><strong>Description:</strong> Plasma-Arc Manufacturing turning wire feedstock into meter-scale aerospace
+            metal structures (e.g., propellant tanks) in weeks.</p>
+          <p><strong>Website:</strong> <a href="https://coronal.tech">coronal.tech</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Lumafield</h3>
+          <img src="https://img.logo.dev/lumafield.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Lumafield Logo" />
+          <p><strong>Description:</strong> Desktop X-ray CT scanners plus cloud 3-D analytics that bring non-destructive
+            inspection and porosity/defect analysis in-house.</p>
+          <p><strong>Website:</strong> <a href="https://www.lumafield.com">www.lumafield.com</a></p>
+          <p class="news">8 May 2025 – Lumafield launches Triton, a high-throughput industrial CT scanner built for
+            production lines. Lumafield</p>
+        </div>
+        <div class="company">
+          <h3>Alloy Enterprises</h3>
+          <img src="https://img.logo.dev/alloyenterprises.co?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Alloy Enterprises Logo" />
+          <p><strong>Description:</strong> Stack-Forging™ aluminum process and micro-channel liquid-cooling hardware
+            delivering industry-leading thermal performance.</p>
+          <p><strong>Website:</strong> <a href="https://alloyenterprises.co">alloyenterprises.co</a></p>
+          <p class="news">10 Jun 2025 – Alloy Enterprises debuts copper direct-liquid-cooling plates made with its Stack
+            Forging™ process for AI data-center racks. PR Newswire</p>
+        </div>
+        <div class="company">
+          <h3>Aria Group (Advanced Composites)</h3>
+          <img src="https://img.logo.dev/aria-group.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Aria Group (Advanced Composites) Logo" />
+          <p><strong>Description:</strong> Design-through-build service turning advanced composite concepts into
+            prototypes and low-volume production parts for aerospace, defense, and mobility OEMs.</p>
+          <p><strong>Website:</strong> <a href="https://www.aria-group.com">www.aria-group.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Doowon Heavy Industrial</h3>
+          <img src="https://img.logo.dev/doowonhi.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Doowon Heavy Industrial Logo" />
+          <p><strong>Description:</strong> Korea's leading producer of mission-critical machined parts for missile
+            systems, launchers, aerospace platforms, and next-gen vehicles.</p>
+          <p><strong>Website:</strong> <a href="https://www.doowonhi.com/en">www.doowonhi.com/en</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Integrated Dynamics</h3>
+          <img src="https://img.logo.dev/int-dyn.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Integrated Dynamics Logo" />
+          <p><strong>Description:</strong> Deploying high-temperature biology that converts existing U.S. corn-ethanol
+            plants into full biorefineries, producing higher-value industrial feedstocks and fuels.</p>
+          <p><strong>Website:</strong> <a href="https://www.int-dyn.com">www.int-dyn.com</a></p>
+          <p class="news">Jun 2025 – Integrated Dynamics CEO Henry Markarian presents "Beyond Yeast: High-Temperature
+            Fermentation for Next-Gen Biofuels" at the 2025 Fuel Ethanol Workshop. 2025-few.bbiconferences.com</p>
+        </div>
+        <div class="company">
+          <h3>Accurate Metals</h3>
+          <img src="https://img.logo.dev/ampflame.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Accurate Metals Logo" />
+          <p><strong>Description:</strong> Steel-plate processing (cutting, beveling, forming) for defense, mining,
+            agriculture and energy OEMs—with a push toward greater automation.</p>
+          <p><strong>Website:</strong> <a href="https://ampflame.com">ampflame.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Waterline Development</h3>
+          <img src="https://img.logo.dev/waterlinedesal.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Waterline Development Logo" />
+          <p><strong>Description:</strong> Modular freshwater-generation systems (desalination / atmospheric) that
+            unlock industrial expansion in water-constrained regions.</p>
+          <p><strong>Website:</strong> <a href="https://waterlinedesal.com">waterlinedesal.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Citrimer</h3>
+          <img src="https://img.logo.dev/citrimer.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Citrimer Logo" />
+          <p><strong>Description:</strong> "Green-premium-free" fiber-reinforced composite resins that cut embodied
+            carbon and processing energy for aerospace & defense parts.</p>
+          <p><strong>Website:</strong> <a href="https://citrimer.com">citrimer.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Magnum Metals / Ohio Carbon Industries</h3>
+          <img src="https://img.logo.dev/magnummetals.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Magnum Metals / Ohio Carbon Industries Logo" />
+          <p><strong>Description:</strong> Vertically-integrated Ohio plant converting petroleum coke into high-purity
+            carbon billets, powders and machined parts, paired with in-house robotics cells that automate finishing for
+            defense, aerospace and industrial customers.</p>
+          <p><strong>Website:</strong> <a href="https://magnummetals.com">magnummetals.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Werco Manufacturing</h3>
+          <img src="https://img.logo.dev/wercomfg.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Werco Manufacturing Logo" />
+          <p><strong>Description:</strong> 38-year, family-owned, vertically-integrated machining & sheet-metal plant
+            that's adding automated battery-enclosure and precision-weld cells to supply aerospace, defense and
+            critical-infrastructure programs from U.S. soil.</p>
+          <p><strong>Website:</strong> <a href="https://wercomfg.com">wercomfg.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+      </div>
+    </div>
+    <div class="page-break-after"></div>
+
+    <div class="category new-page" id="defense-security">
+      <h2>Defense and Security</h2>
+      <div class="companies-grid">
+        <div class="company">
+          <h3>Allen Control Systems</h3>
+          <img src="https://img.logo.dev/allencontrolsystems.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Allen Control Systems Logo" />
+          <p><strong>Description:</strong> Counter-drone and drone platforms for defense/security.</p>
+          <p><strong>Website:</strong> <a href="https://www.allencontrolsystems.com">www.allencontrolsystems.com</a></p>
+          <p class="news">27 Mar 2025 – Allen Control Systems closes a $30 M Series A round led by Craft Ventures to
+            accelerate its Bullfrog counter-drone weapon station. (Fortune)</p>
+        </div>
+        <div class="company">
+          <h3>Galvanick</h3>
+          <img src="https://img.logo.dev/galvanick.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Galvanick Logo" />
+          <p><strong>Description:</strong> Cyber-security platform that protects industrial control systems.</p>
+          <p><strong>Website:</strong> <a href="https://www.galvanick.com">www.galvanick.com</a></p>
+          <p class="news">22 Jan 2025 – Galvanick secures $10 M in funding to expand its industrial cybersecurity
+            platform protecting factories and critical infrastructure. (leadsontrees.com)</p>
+        </div>
+        <div class="company">
+          <h3>L3Harris Technologies</h3>
+          <img src="https://img.logo.dev/l3harris.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="L3Harris Technologies Logo" />
+          <p><strong>Description:</strong> Advanced defense and aerospace systems—including next-gen airborne mission
+            solutions—designed and built in-house.</p>
+          <p><strong>Website:</strong> <a href="https://www.l3harris.com">www.l3harris.com</a></p>
+          <p class="news">19 Jun 2025 – L3Harris wins a $487 M U.S. Army contract to modernize enterprise terminals and
+            depots. GovCon Wire</p>
+        </div>
+        <div class="company">
+          <h3>Northrop Grumman</h3>
+          <img src="https://img.logo.dev/northropgrumman.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Northrop Grumman Logo" />
+          <p><strong>Description:</strong> Full-spectrum aerospace & defense systems—from stealth aircraft and
+            autonomous platforms to advanced missiles and space assets.</p>
+          <p><strong>Website:</strong> <a href="https://www.northropgrumman.com">www.northropgrumman.com</a></p>
+          <p class="news">1 Jul 2025 – Northrop Grumman signs MoU with ROMARM to provide advanced ground-based radars to
+            Romania. Northrop Grumman News</p>
+        </div>
+        <div class="company">
+          <h3>Epirus</h3>
+          <img src="https://img.logo.dev/epirusinc.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Epirus Logo" />
+          <p><strong>Description:</strong> Non-kinetic, high-power-microwave (HPM) air-defense platform that disables
+            drone swarms and other electronics threats.</p>
+          <p><strong>Website:</strong> <a href="https://www.epirusinc.com">www.epirusinc.com</a></p>
+          <p class="news">29 Apr 2025 – Epirus delivers ExDECS high-power-microwave prototype to the U.S. Navy for
+            Marine Corps counter-drone swarms. Epirus</p>
+        </div>
+        <div class="company">
+          <h3>General Dynamics Land Systems</h3>
+          <img src="https://img.logo.dev/gdls.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="General Dynamics Land Systems Logo" />
+          <p><strong>Description:</strong> Designs and manufactures U.S. Army & USMC ground-combat vehicles (Abrams tank
+            family, Stryker, unmanned platforms, hybrid-electric prototypes).</p>
+          <p><strong>Website:</strong> <a href="https://www.gdls.com">www.gdls.com</a></p>
+          <p class="news">30 Jun 2025 – U.S. Army awards General Dynamics Land Systems a $150 M contract for the Abrams
+            Engineering Program. defense.gov</p>
+        </div>
+        <div class="company">
+          <h3>Picogrid</h3>
+          <img src="https://img.logo.dev/picogrid.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Picogrid Logo" />
+          <p><strong>Description:</strong> Defense-tech platform that unifies sensors, vehicles, and operators across
+            land, sea, air, and space into a single command-and-control mesh.</p>
+          <p><strong>Website:</strong> <a href="https://picogrid.com">picogrid.com</a></p>
+          <p class="news">8 Apr 2025 – Picogrid won a $2.7 M U.S. Air Force contract to modernize command-and-control
+            networks. picogrid.com</p>
+        </div>
+        <div class="company">
+          <h3>DFA Systems</h3>
+          <img src="https://img.logo.dev/dfasystems.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="DFA Systems Logo" />
+          <p><strong>Description:</strong> Marine-veteran-led startup designing modular, AI/edge-enabled unmanned
+            aircraft and ground robots that are low-cost, attritable and rapidly configurable for logistics and
+            force-protection missions.</p>
+          <p><strong>Website:</strong> <a href="https://dfasystems.com">dfasystems.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Foothold Labs</h3>
+          <img src="https://img.logo.dev/footholdlabs.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Foothold Labs Logo" />
+          <p><strong>Description:</strong> Field-deployable biosensor diagnostic platform (quantum-dot chemistry + AI
+            signal processing) for next-gen pathogen/toxin detection and a solid-state "quantum" battery program with a
+            prime contractor—bringing lab-grade sensing & high-density energy storage to edge DoD missions.</p>
+          <p><strong>Website:</strong> <a href="https://footholdlabs.com">footholdlabs.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+      </div>
+    </div>
+
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="page-watermark">
+      <img src="https://img.logo.dev/dalus.io?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png" alt="Dalus Logo">
+    </div>
+    <div class="content">
+      <div class="category" id="industrial-commerce">
+        <h2>Industrial Commerce</h2>
+      <div class="companies-grid">
+        <div class="company">
+          <h3>Titeg</h3>
+          <img src="https://img.logo.dev/titeg.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Titeg Logo" />
+          <p><strong>Description:</strong> Data-driven industrial-commerce platform starting with steel logistics.</p>
+          <p><strong>Website:</strong> <a href="https://titeg.com">titeg.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Pascal</h3>
+          <img src="https://img.logo.dev/pascaltags.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Pascal Logo" />
+          <p><strong>Description:</strong> Chip-less RFID (barcode-cost) inventory platform, validated by GE.</p>
+          <p><strong>Website:</strong> <a href="https://www.pascaltags.com">www.pascaltags.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Supplyco</h3>
+          <img src="https://img.logo.dev/supplyco.ai?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Supplyco Logo" />
+          <p><strong>Description:</strong> Tech-enabled industrial distributor modernizing parts procurement.</p>
+          <p><strong>Website:</strong> <a href="https://www.supplyco.ai">www.supplyco.ai</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="category new-page" id="energy-storage">
+      <h2>Energy Storage and Materials</h2>
+      <div class="companies-grid">
+        <div class="company">
+          <h3>Safire Technology Group</h3>
+          <img src="https://img.logo.dev/safire.co?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Safire Technology Group Logo" />
+          <p><strong>Description:</strong> Next-generation energy-storage hardware (safer, higher-performance Li-ion
+            batteries) and supporting software for defense and electric-mobility systems.</p>
+          <p><strong>Website:</strong> <a href="https://www.safire.co">www.safire.co</a></p>
+          <p class="news">28 Apr 2025 – Safire wins a $4.5 M U.S. Air Force contract under the ARES program for
+            ruggedized electrified power systems. PR Newswire</p>
+        </div>
+        <div class="company">
+          <h3>Celadyne</h3>
+          <img src="https://img.logo.dev/celadyne.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Celadyne Logo" />
+          <p><strong>Description:</strong> Ceramic-based proton-exchange membranes that cut hydrogen fuel-cell and
+            electrolyzer costs while raising temperature durability.</p>
+          <p><strong>Website:</strong> <a href="https://www.celadyne.com">www.celadyne.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Ouros</h3>
+          <img src="https://img.logo.dev/ouros.energy?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Ouros Logo" />
+          <p><strong>Description:</strong> 2.5× energy-density lithium-ion chemistry and a roadmap to domestic
+            gigafactory production for reshored battery supply.</p>
+          <p><strong>Website:</strong> <a href="https://ouros.energy">ouros.energy</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Mersenne Labs</h3>
+          <img src="https://img.logo.dev/mersennelabs.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Mersenne Labs Logo" />
+          <p><strong>Description:</strong> Mobile micro-reactor "nuclear battery" supplying uninterrupted, modular power
+            for defense, space, and remote infrastructure.</p>
+          <p><strong>Website:</strong> <a href="https://www.mersennelabs.com">www.mersennelabs.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Group1</h3>
+          <img src="https://img.logo.dev/group1.ai?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Group1 Logo" />
+          <p><strong>Description:</strong> Potassium-ion battery chemistry and cell manufacturing aimed at a safer,
+            supply-chain-resilient alternative to lithium-ion for grid and defense uses.</p>
+          <p><strong>Website:</strong> <a href="https://group1.ai">group1.ai</a></p>
+          <p class="news">Jun 18 2025 – Tracxn update shows Group1 at $7.5 M total funding as it scales potassium-ion
+            batteries. Tracxn</p>
+        </div>
+        <div class="company">
+          <h3>Critical Loop</h3>
+          <img src="https://img.logo.dev/criticalloop.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Critical Loop Logo" />
+          <p><strong>Description:</strong> MW-scale, ultra-compact power-conversion stacks that give factories fast,
+            modular access to reliable high-voltage electricity.</p>
+          <p><strong>Website:</strong> <a href="https://criticalloop.com">criticalloop.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Arcturus</h3>
+          <p><strong>Description:</strong> Next-generation conductor technology (novel metal-matrix composites) that
+            doubles power throughput on existing grid lines.</p>
+          <p><strong>Website:</strong> N/A</p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Coreshell Technologies</h3>
+          <img src="https://img.logo.dev/coreshell.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Coreshell Technologies Logo" />
+          <p><strong>Description:</strong> Nanometer-thin, roll-to-roll coating that prevents electrolyte breakdown on
+            lithium-ion electrodes—boosting cycle life >40 % and enabling use of low-cost, high-energy chemistries in EV
+            and defense cells.</p>
+          <p><strong>Website:</strong> <a href="https://coreshell.com">coreshell.com</a></p>
+          <p class="news">18 Mar 2025 – Coreshell Technologies secured $24 M in strategic funding to scale silicon-rich
+            battery-cell production. coreshell.com</p>
+        </div>
+        <div class="company">
+          <h3>Paladin Exploration</h3>
+          <img src="https://img.logo.dev/paladinexploration.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Paladin Exploration Logo" />
+          <p><strong>Description:</strong> First new U.S. flake-graphite mine in decades—core-drilling and
+            pilot-processing to secure anode-grade graphite for domestic battery and defense supply chains.</p>
+          <p><strong>Website:</strong> <a href="https://paladinexploration.com">paladinexploration.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Petra Power</h3>
+          <img src="https://img.logo.dev/petrapower.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Petra Power Logo" />
+          <p><strong>Description:</strong> Ceramic-membrane microturbine that converts diesel, natural gas or hydrogen
+            to electricity with up to 70 % fuel-to-power efficiency—offering rugged, fuel-flexible gensets for remote
+            industry and DoD.</p>
+          <p><strong>Website:</strong> <a href="https://petrapower.com">petrapower.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>Mesodyne</h3>
+          <img src="https://img.logo.dev/mesodyne.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Mesodyne Logo" />
+          <p><strong>Description:</strong> Hand-carry thermophotovoltaic generator that burns JP-8, diesel or propane
+            and produces silent, low-signature 20–1000 W electricity for dismounted troops and off-grid sensors.</p>
+          <p><strong>Website:</strong> <a href="https://mesodyne.com">mesodyne.com</a></p>
+          <p class="news">Feb 3 2025 – Awarded U.S. Army Phase II SBIR to integrate the LightCell thermophotovoltaic
+            generator into a Group 2 fixed-wing drone platform. mesodyne.com</p>
+        </div>
+        <div class="company">
+          <h3>HeXalayer</h3>
+          <img src="https://img.logo.dev/hexalayer.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="HeXalayer Logo" />
+          <p><strong>Description:</strong> DoD-funded process for roll-to-roll graphene coatings and silicon-graphene
+            composite anodes that raise Li-ion energy density and cold-weather performance—targeting U.S. battery cell
+            makers seeking domestic, high-rate materials.</p>
+          <p><strong>Website:</strong> <a href="https://hexalayer.com">hexalayer.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="category new-page" id="aerospace-mobility">
+      <h2>Aerospace and Mobility</h2>
+      <div class="companies-grid">
+        <div class="company">
+          <h3>Aerolane</h3>
+          <img src="https://img.logo.dev/aerolane.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Aerolane Logo" />
+          <p><strong>Description:</strong> Aerodynamic drag-reduction platform that tows cargo and passenger aircraft,
+            cutting fuel use by ~50 % and extending range ~30 %; DoD demos begin this year.</p>
+          <p><strong>Website:</strong> <a href="https://www.aerolane.com">www.aerolane.com</a></p>
+          <p class="news">No recent news found.</p>
+        </div>
+        <div class="company">
+          <h3>REGENT</h3>
+          <img src="https://img.logo.dev/regentcraft.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="REGENT Logo" />
+          <p><strong>Description:</strong> All-electric wing-in-ground-effect seaglider vehicles now moving toward
+            full-scale coastal-transport manufacturing.</p>
+          <p><strong>Website:</strong> <a href="https://www.regentcraft.com">www.regentcraft.com</a></p>
+          <p class="news">6 Mar 2025 – REGENT begins sea trials of its full-scale 12-passenger Viceroy electric
+            seaglider with crew aboard. Regentcraft</p>
+        </div>
+        <div class="company">
+          <h3>Poseidon Aerospace</h3>
+          <img src="https://img.logo.dev/poseidonaero.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Poseidon Aerospace Logo" />
+          <p><strong>Description:</strong> Next-generation seaplanes designed to provide resilient logistics and supply
+            to the U.S. and allied nations.</p>
+          <p><strong>Website:</strong> <a href="https://www.poseidonaero.com">www.poseidonaero.com</a></p>
+          <p class="news">Apr 2025 – Poseidon Aerospace emerges from stealth with plans to test its Seagull uncrewed
+            cargo seaglider with the U.S. Navy and Coast Guard. Business Insider</p>
+        </div>
+        <div class="company">
+          <h3>GE Aerospace</h3>
+          <img src="https://img.logo.dev/geaerospace.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="GE Aerospace Logo" />
+          <p><strong>Description:</strong> Advanced avi</p>
+          <p><strong>Website:</strong> <a href="https://www.geaerospace.com">www.geaerospace.com</a></p>
+          <p class="news">9 Jul 2025 – SkyWest orders GE Aerospace engines to power 20 new Embraer 175 jets. GE
+            Aerospace</p>
+        </div>
+        <div class="company">
+          <h3>Arc</h3>
+          <img src="https://img.logo.dev/arcboats.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Arc Logo" />
+          <p><strong>Description:</strong> All-electric performance boats and drivetrain technology aimed at
+            decarbonizing the $30 B U.S. recreational-marine sector.</p>
+          <p><strong>Website:</strong> <a href="https://arcboats.com">arcboats.com</a></p>
+          <p class="news">May 15 2025 – Arc Boats unveils the Arc Coast, a lower-cost 24-ft all-electric center-console
+            model. Electrek</p>
+        </div>
+        <div class="company">
+          <h3>Archer Aviation</h3>
+          <img src="https://img.logo.dev/archer.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Archer Aviation Logo" />
+          <p><strong>Description:</strong> eVTOL aircraft (Midnight) and a scaled composite-airframe factory targeting
+            zero-emission regional air mobility by 2028.</p>
+          <p><strong>Website:</strong> <a href="https://archer.com">archer.com</a></p>
+          <p class="news">Jul 2 2025 – Archer Aviation begins Midnight eVTOL prototype test flights in Abu Dhabi.
+            Aviation International News</p>
+        </div>
+        <div class="company">
+          <h3>Joby Aviation</h3>
+          <img src="https://img.logo.dev/jobyaviation.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Joby Aviation Logo" />
+          <p><strong>Description:</strong> Full-scale manufacturing of five-seat electric VTOL aircraft (Midnight) plus
+            proprietary motor, inverter and composite-fuselage lines to launch zero-emission regional air mobility in
+            the U.S. by 2028.</p>
+          <p><strong>Website:</strong> <a href="https://www.jobyaviation.com">www.jobyaviation.com</a></p>
+          <p class="news">1 Jul 2025 – Joby Aviation completed its first Dubai air-taxi test flight ahead of a 2026
+            launch. Reuters</p>
+        </div>
+        <div class="company">
+          <h3>Shandoka Electric Motorcycles</h3>
+          <img src="https://img.logo.dev/shandokacycles.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Shandoka Electric Motorcycles Logo" />
+          <p><strong>Description:</strong> Bolt-on, patent-protected retrofit kit that swaps ICE drivetrains for a
+            modular electric power-train—letting builders convert existing motorcycles (and other small vehicles) to
+            fully electric without frame changes; Detroit factory sources Michigan-made battery, electronics and
+            composite parts.</p>
+          <p><strong>Website:</strong> <a href="https://shandokacycles.com">shandokacycles.com</a></p>
+          <p class="news">June 12 2025 – Highlighted as an exhibitor at the Kinetyc Mobility Innovation Showcase,
+            demonstrating its bolt-on electric-motorcycle retrofit kit. LinkedIn</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="category new-page" id="sustainability">
+      <h2>Sustainability and Infrastructure</h2>
+      <div class="companies-grid">
+        <div class="company">
+          <h3>Kadeya</h3>
+          <img src="https://img.logo.dev/kadeya.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Kadeya Logo" />
+          <p><strong>Description:</strong> Patented, closed-loop hydration kiosk—mini bottling plant + dishwasher + soda
+            fountain—that slashes single-use plastic on industrial sites.</p>
+          <p><strong>Website:</strong> <a href="https://www.kadeya.com">www.kadeya.com</a></p>
+          <p class="news">26 Jun 2025 – Kadeya showcased its closed-loop hydration kiosk at The Water Council's BREW 2.0
+            Showcase. thewatercouncil.com</p>
+        </div>
+        <div class="company">
+          <h3>Maddox Industrial Transformer</h3>
+          <img src="https://img.logo.dev/maddox.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Maddox Industrial Transformer Logo" />
+          <p><strong>Description:</strong> Manufactures and remanufactures distribution transformers at scale,
+            addressing North America's critical grid-equipment bottleneck.</p>
+          <p><strong>Website:</strong> <a href="https://www.maddox.com">www.maddox.com</a></p>
+          <p class="news">4 Jun 2025 – Maddox Industrial Transformer published an analysis on surging transformer demand
+            and aging U.S. grids. Maddox</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="category new-page" id="nuclear-energy">
+      <h2>Nuclear and Advanced Energy</h2>
+      <div class="companies-grid">
+        <div class="company">
+          <h3>Exodys Energy</h3>
+          <img src="https://img.logo.dev/exodysenergy.com?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png"
+            alt="Exodys Energy Logo" />
+          <p><strong>Description:</strong> Nuclear-fuel recycling technology that converts spent fuel into fresh
+            material for current reactors and next-gen micro-reactors.</p>
+          <p><strong>Website:</strong> <a href="https://www.exodysenergy.com">www.exodysenergy.com</a></p>
+          <p class="news">29 May 2025 – Exodys Energy and Snow Lake formed a joint venture to develop small-modular
+            reactors for U.S. data-center power, pairing SMR design with Exodys' spent-fuel-recycling tech. Data Center
+            Dynamics</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  </div>
+
+  <footer>
+    <p style="font-size: 24px; font-weight: 300; margin-bottom: 20px;">Reindustrialize Summit 2025 | Produced by Designing America</p>
+    <div class="footer-logo">
+      <img src="https://img.logo.dev/dalus.io?token=pk_CIKpO3ExQnikAs7Sbwm5xQ&size=200&format=png" alt="Dalus Logo">
+      <span>This report is brought to you by Dalus</span>
+    </div>
+    <p>For more information, visit <a href="https://www.reindustrialize.com">www.reindustrialize.com</a></p>
+  </footer>
+</body>
+
+</html>
