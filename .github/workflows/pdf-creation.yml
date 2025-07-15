@@ -1,0 +1,65 @@
+# PDF Companion Creation
+#
+# This workflow creates a PDF companion to the website, and then uploads an artifact and commits a file before finishing.
+#
+
+name: PDF Companion Creation
+on:
+  push:
+    branches: [ "main" ]
+
+  workflow_dispatch:
+  
+jobs:
+  build_and_convert:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1' 
+          bundler-cache: true # Automatically runs 'bundle install' and caches gems
+
+      - name: Build Jekyll site
+        run: bundle exec jekyll build
+        env:
+          JEKYLL_ENV: production
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Install WeasyPrint
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libpango-1.0-0 libpangoft2-1.0-0
+          pip install weasyprint
+
+      - name: Convert companies.html to PDF
+        run: |
+          echo "Converting ./_site/companies.html to PDF..."
+          weasyprint ./_site/companies.html companies.pdf
+          echo "PDF conversion complete: companies.pdf"
+
+      - name: Commit PDF to repository
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "docs: Create and commit companies.pdf"
+          file_pattern: companies.pdf
+          commit_user_name: "GitHub Actions Bot"
+          commit_user_email: "github-actions[bot]@users.noreply.github.com"
+          commit_author: "GitHub Actions Bot <github-actions[bot]@users.noreply.github.com>"
+
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: companies-pdf
+          path: companies.pdf
